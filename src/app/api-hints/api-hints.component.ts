@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Color, NgxChartsModule, ScaleType } from '@swimlane/ngx-charts';
 import { scaleOrdinal } from 'd3';
+import {SparqlService} from '../sparql.service';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-api-hints',
@@ -9,6 +11,7 @@ import { scaleOrdinal } from 'd3';
   styleUrls: ['./api-hints.component.css']
 })
 export class ApiHintsComponent implements OnInit {
+  results$: Subject<any>;
   multi: any[] =[
     {
       "name": "api hits",
@@ -53,24 +56,9 @@ export class ApiHintsComponent implements OnInit {
     domain: ['#b4520c','','#b547b1c','#ab2218']
   };
 
-  constructor() {
-    this.apiHits=[
-      {
-        name: "2021-15-01", 
-        value: 572
-        
-      },
-      {
-        name: "2021-14-01", 
-        value: 364
-        
-      },
-      {
-        name: "2021-13-01", 
-        value: 12
-      
-      },
-    ];
+  constructor(public sparql: SparqlService) {
+    this.results$ = this.sparql.apihitsWms$
+    
   }
   onSelect(data:any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
@@ -84,6 +72,10 @@ export class ApiHintsComponent implements OnInit {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
   ngOnInit(): void {
+    this.sparql.getApihits();
+    this.sparql.apihitsWms$.subscribe(results => {
+      console.log("api", results);
+    })
     
   
   }

@@ -1,6 +1,6 @@
 <div class="matric">
 <h3>API Hits</h3>
-<div class="chart-holder">
+<div class="chart-holder" *ngIf="results$ | async as results">
     <ngx-charts-line-chart
     [scheme]="colorScheme"
     [legend]="legend"
@@ -11,7 +11,7 @@
     [xAxisLabel]="xAxisLabel"
     [yAxisLabel]="yAxisLabel"
     [timeline]="timeline"
-    [results]="multi"
+    [results]="results"
     >
   </ngx-charts-line-chart>
 </div>

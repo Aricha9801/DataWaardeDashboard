@@ -63,6 +63,8 @@ export interface CommoninfoBinding {
       datatype:string,
       value:number
     }
+  }
 
-
+  export interface ApiHitsBinding {
+    
   }
