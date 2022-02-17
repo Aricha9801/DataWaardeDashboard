@@ -65,6 +65,7 @@ export class SparqlService {
   };
 
   ApihitsProcessing(apiBinding:any[]):any[]{
+    //extract name-value pair from the binding
     let apiTimeValue=apiBinding.map(tvPair => {
       let nameValue={
         "name":tvPair.time.value,
@@ -72,9 +73,21 @@ export class SparqlService {
       };
       return nameValue
     })
+    //order the array by the name(time)
+    let orderedApiTimeValue=apiTimeValue.sort((a, b) => (a.name < b.name ? -1 : 1));
+    //cut the time string for visualizing
+    //length: 19 for yy-mm-dd-T-hh-mm-ss
+    //length: 10 for yy-mm-dd
+    orderedApiTimeValue.forEach(pair=>{
+      pair.name=pair.name.substr(0, 10)
+    })
+    
+      
+  
+    //dump the array into the format supported by ngx-charts
     let res=[{
       "name":"api hits",
-      "series":apiTimeValue
+      "series":orderedApiTimeValue
 
     }]
     return res;

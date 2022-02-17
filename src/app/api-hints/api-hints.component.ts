@@ -12,29 +12,6 @@ import {Subject} from 'rxjs';
 })
 export class ApiHintsComponent implements OnInit {
   results$: Subject<any>;
-  multi: any[] =[
-    {
-      "name": "api hits",
-      "series": [
-        {
-          name: "2021-13-01", 
-          value: 12
-        
-        },
-        {
-          name: "2021-14-01", 
-          value: 364
-          
-        },
-        {
-          name: "2021-15-01", 
-          value: 572
-          
-        },
-      ]
-    },
-  ];
-  apiHits: any;
   view: [number,number] = [330, 320];
 
   // options
@@ -57,7 +34,7 @@ export class ApiHintsComponent implements OnInit {
   };
 
   constructor(public sparql: SparqlService) {
-    this.results$ = this.sparql.apihitsWms$
+    this.results$ = this.sparql.apihitsWfs$
     
   }
   onSelect(data:any): void {
